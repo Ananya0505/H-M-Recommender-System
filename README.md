@@ -132,3 +132,89 @@
     <li>Many customers do not receive fashion news.</li>
     <li><strong>Jersey garments</strong> and <strong>ladieswear</strong> are highly preferred.</li>
 </ul>
+
+<h1 style="background-color:#f7e9ec;font-family:newtimeroman;color:#d90b1c;text-align:center;border-radius:10px 10px;border-style:solid;border-color:#d90b1c;">
+    Recommendation System for H&M Fashion
+</h1>
+
+<h2 style="color:#d90b1c;">Main</h2>
+
+
+<h2 style="color:#d90b1c;">1. Initialize Spark Session</h2>
+<p>The required libraries are installed, and a Spark session is created:</p>
+<pre><code>!pip install pyspark
+from pyspark.sql import SparkSession
+
+sc = SparkSession.builder.appName("Recommendations").config("spark.sql.files.maxPartitionBytes", 5000000).getOrCreate()
+spark = SparkSession(sc)
+</code></pre>
+
+<h2 style="color:#d90b1c;">2. Load Required Libraries</h2>
+<p>Various libraries for data processing and machine learning are imported.</p>
+
+<h2 style="color:#d90b1c;">3. Load Dataset in Apache Spark</h2>
+<p>The transaction dataset is loaded into Spark.</p>
+<pre><code>transaction = spark.read.option("header",True).csv("../input/h-and-m-personalized-fashion-recommendations/transactions_train.csv")</code></pre>
+
+<h2 style="color:#d90b1c;">4. Data Selection for Recommendation</h2>
+<p>The dataset is filtered to include only transactions from the most recent date, <strong>2020-09-22</strong>.</p>
+
+<h2 style="color:#d90b1c;">5. Data Processing</h2>
+<p>The dataset is cleaned and transformed:</p>
+<ul>
+    <li>Converted date values into year, month, and day.</li>
+    <li>Filtered transactions for the latest available date.</li>
+    <li>Grouped data by <strong>customer_id</strong> and <strong>article_id</strong>, counting the occurrences.</li>
+</ul>
+
+<h2 style="color:#d90b1c;">6. Sparsity Calculation</h2>
+<p>The sparsity of the dataset is calculated to measure the number of missing values.</p>
+
+<h2 style="color:#d90b1c;">7. Convert String to Index</h2>
+<p>ALS only accepts integer values, so <strong>customer_id</strong> and <strong>article_id</strong> are converted to numerical indexes.</p>
+
+<h2 style="color:#d90b1c;">8. Creating Training and Test Data</h2>
+<p>The dataset is split into training (80%) and test (20%) sets.</p>
+
+<h2 style="color:#d90b1c;">9. Creating ALS Model and Fitting Data</h2>
+<p>The ALS model is created with:</p>
+<ul>
+    <li><strong>userCol:</strong> Customer ID index</li>
+    <li><strong>itemCol:</strong> Article ID index</li>
+    <li><strong>ratingCol:</strong> Count of purchases</li>
+    <li><strong>coldStartStrategy:</strong> Drop missing values</li>
+    <li><strong>nonnegative:</strong> True (ensuring positive values only)</li>
+</ul>
+
+<h2 style="color:#d90b1c;">10. Model Tuning</h2>
+<p>The model is tuned using cross-validation:</p>
+<ul>
+    <li>Different values for <strong>rank</strong>, <strong>maxIter</strong>, and <strong>regParam</strong> are tested.</li>
+    <li>The best-performing model is selected.</li>
+</ul>
+
+<h2 style="color:#d90b1c;">11. Model Evaluation</h2>
+<p>The model is evaluated using <strong>Root Mean Square Error (RMSE)</strong> to measure accuracy.</p>
+<pre><code>rmse = evaluator.evaluate(predictions)
+print("RMSE =", str(rmse))</code></pre>
+
+<h2 style="color:#d90b1c;">12. Generating Recommendations</h2>
+<p>The trained model provides:</p>
+<ul>
+    <li>Recommendations for each <strong>Article ID</strong>.</li>
+    <li>Recommendations for each <strong>Customer ID</strong>.</li>
+</ul>
+
+<h2 style="color:#d90b1c;">13. Converting Back to Original IDs</h2>
+<p>The predicted results are mapped back to their original customer and article IDs.</p>
+
+<h2 style="color:#d90b1c;">14. Exporting Predictions</h2>
+<p>The final recommendations are exported as a CSV file for further analysis.</p>
+
+<h2 style="color:#d90b1c;">15. Conclusion</h2>
+<p>The recommendation system built using <strong>Apache Spark</strong> and <strong>PySpark ALS</strong> provides personalized article suggestions for H&M customers.</p>
+
+<h3 style="background-color:#f7e9ec;font-family:newtimeroman;color:#d90b1c;text-align:center;border-radius:10px 10px;border-style:solid;border-color:#d90b1c;">
+    Please leave your comments/suggestions, and if you like this kernel, consider UPVOTING!
+</h3>
+
