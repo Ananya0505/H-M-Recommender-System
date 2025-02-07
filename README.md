@@ -214,7 +214,4 @@ print("RMSE =", str(rmse))</code></pre>
 <h2 style="color:#d90b1c;">15. Conclusion</h2>
 <p>The recommendation system built using <strong>Apache Spark</strong> and <strong>PySpark ALS</strong> provides personalized article suggestions for H&M customers.</p>
 
-<h3 style="background-color:#f7e9ec;font-family:newtimeroman;color:#d90b1c;text-align:center;border-radius:10px 10px;border-style:solid;border-color:#d90b1c;">
-    Please leave your comments/suggestions, and if you like this kernel, consider UPVOTING!
-</h3>
 
