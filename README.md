@@ -10,7 +10,7 @@
     <li><strong>Alternating Least Squares (ALS) Matrix Factorization:</strong> The idea is basically to take a large (or potentially huge) matrix and factor it into some smaller representation of the original matrix through alternating least squares. We end up with two or more lower dimensional matrices whose product equals the original one.ALS comes inbuilt in Apache Spark.</li>
     <li><strong>PySpark:</strong> PySpark is the collaboration of Apache Spark and Python. PySpark is the Python API for Spark.</li>
 </ul>
-<h2> EDA </h2>
+
 <h1 style="background-color:#f7e9ec;font-family:newtimeroman;color:#d90b1c;text-align:center;border-radius:10px 10px;border-style:solid;border-color:#d90b1c;">
     Exploratory Data Analysis (EDA) on H&M Fashion Dataset
 </h1>
